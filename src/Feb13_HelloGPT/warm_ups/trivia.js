@@ -8,6 +8,8 @@ import { gptPrompt } from "../../shared/openai.js";
 
 main();
 
+// let counter = 0;
+
 async function main() {
   say("Hello, Player!");
 
@@ -22,7 +24,12 @@ async function main() {
 
     Include only the array, start with [ and end with ].
     `,
-    { max_tokens: 1024, temperature: 0.3 },
+    { max_tokens: 1024, temperature: 0.3 }, //original
+    // { max_tokens: 1024, temperature: 0.1 }, //low temperature
+    // { max_tokens: 1024, temperature: 1.8 }, //high thmperature
+
+    // * low_temp: respond are more 'stable' in a way, the structure are easier to understand and more precise.
+    // * high_temp: respond from chatGPT are more randomly (sometimes with soemthing that seems 'unprocesses), and less structure.
   );
 
   let questions = [];
@@ -42,9 +49,11 @@ async function main() {
       `
     The question was '${q}'.
     The provided answer was '${a}'.
-    Was the answer correct?
+    Was the answer correct? if the answer is correct add to counter.
     Be an easy grader. Accept answers that are close enough. Allow misspellings.
     Answer yes or no. If no, provide the correct answer.
+
+    display counter please.
     `,
       { max_tokens: 64, temperature: 0.1 },
     );

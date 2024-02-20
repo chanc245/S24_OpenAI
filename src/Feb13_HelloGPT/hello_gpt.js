@@ -1,5 +1,7 @@
 /**
- * This is a basic example of sending a prompt to GPT and showing the results.
+ * To help user to communicate with ChatGPT effectively.
+ * User: enter what they want to ask
+ * output: have
  */
 
 import { ask, say } from "../shared/cli.js";
@@ -12,7 +14,10 @@ async function main() {
 
   const response = ask("What do you want to ask? ");
 
-  const result = await gptPrompt(response, { temperature: 0.3 });
+  const result = await gptPrompt(
+    response,
+    { temperature: 1 },
+  );
 
   say(`\n${result}`);
 }

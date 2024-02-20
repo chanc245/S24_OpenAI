@@ -17,7 +17,18 @@ async function main() {
   say("");
 
   const prompt =
-    `My name is ${name} and I am from ${town}. Create a limerick about me.`;
+    `My name is ${name} and I am from ${town}. Create a Haikus about me.
+    
+    Follow the folling traditional requirements for Haiku:
+      It has three lines.
+      It has five syllables in the first and third lines.
+      It has seven syllables in the second line.
+      Its lines don't rhyme.
+      It includes a kireji, or cutting word.
+      It includes a kigo, a seasonal reference.
+    `;
+
+  //rule ref https://www.grammarly.com/blog/how-to-write-haiku/
 
   const limerick = await gptPrompt(prompt, { temperature: 0.7 });
   say(`"""\n${limerick}\n"""`);
