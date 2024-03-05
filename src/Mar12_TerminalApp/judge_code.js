@@ -1,5 +1,5 @@
 /**
- * This program judge your code based on how you name your variable
+ * This program judges your code based on how you name your variables.
  */
 
 import { gptPrompt } from "../shared/openai.js";
@@ -11,22 +11,49 @@ async function main() {
   say("Hello, Coder!");
 
   say(
-    "Hi! This is a terminal App where when you input your code, I will judge your code!",
+    "\nWelcome! This is a terminal App where you can input your code, and I will judge your code based on the clarity of your variable names.",
   );
 
-  const inputCode = await ask("Input your code please");
+  const judgmentLevel = await ask(
+    "\nHow harshly do you want your code judged? Enter a number from 1 (gentle) to 10 (harsh).",
+  );
 
-  const prompt =
-    `Given the following code snippet, evaluate the clarity and descriptiveness of the variable names. Consider if the names give a clear understanding of what data they hold and if they follow common naming conventions for readability. 
-    Review the overall layout and structure of this code snippet. Comment on its readability, organization, and adherence to coding standards.
-    Based on an evaluation of variable naming clarity and overall code layout, provide an overall score out of 10 for this code snippet. Offer a brief justification for your score, considering the clarity of variable names and the readability and organization of the code.
+  const inputCode = await ask("\nPlease input your code:");
 
-    Please respond in a fun way, within two setence with a score.
+  const prompt = `
+    Please provide an overall score out of 10 for the clarity of variable names in this code snippet. 
+    The judgment harshness level is ${judgmentLevel}.
 
-  Code snippet:
-  ${inputCode}
+    Code snippet:
+    ${inputCode}
+
+    NUMBERS ONLY, (for example: 5/10), do NOT provide word explination
+  `;
+
+  const rawScore = await gptPrompt(prompt, { temperature: 0.7 });
+  say(`\nYour code's variable naming score: ${rawScore}`);
+
+  const feedbackInterest = await ask(
+    "\nWould you like some feedback on how you name your variables? (yes/no)",
+  );
+
+  if (feedbackInterest.toLowerCase() === "yes") {
+    const feedbackStyle = await ask(
+      "\nWhat style of feedback would you like? (fun, lighthearted, etc.)",
+    );
+
+    const feedbackPrompt = `
+    \nGiven the code snippet provided and considering the requested feedback style to be ${feedbackStyle}, 
+      offer insights on the clarity and descriptiveness of the variable names. Provide constructive feedback in a ${feedbackStyle} manner.
+      Respond in list
+      
+      Code snippet:
+      ${inputCode}
     `;
 
-  const Judge = await gptPrompt(prompt, { temperature: 0.7 });
-  say(`"""\n${Judge}\n"""`);
+    const feedback = await gptPrompt(feedbackPrompt, { temperature: 0.9 });
+    say(`Feedback on your variable names: """\n${feedback}\n"""`);
+  } else {
+    say("\nAlright, no feedback requested. Happy coding!");
+  }
 }
