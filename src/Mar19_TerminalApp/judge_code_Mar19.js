@@ -34,7 +34,7 @@ async function main() {
   say(
     boxen(
       `Welcome! This is a terminal App where you can input your code, 
-      and I will provide services around your code`,
+      and I will provide services around your code!`,
       {
         padding: 1,
         title: "HELLO CODER",
@@ -51,7 +51,7 @@ async function main() {
   while (continueService) {
     say("");
     say(boxen(
-      `\n1. Judge (give your code a score)
+      `1. Judge (give your code a score)
         \n2. Helper (improve on coding)
         \n3. Troubleshooter (explain why your code is not working)
         \n4. Overall feedback (one sentence feedback and a brief score)
@@ -70,7 +70,7 @@ async function main() {
       case "1": {
         await judgeCode(userInputCode);
         const improveCode = await Confirm.prompt(
-          "\nAfter the scores, would you like a code helper to help you improve your code? (yes/no)",
+          "\nAfter the scores, would you like a code helper to help you improve your code?",
         );
         if (improveCode) {
           await helpCode(userInputCode);
@@ -88,9 +88,7 @@ async function main() {
         break;
       case "5":
         continueService = false;
-        say(
-          "\nThank you for interacting with this terminal app! Happy coding!",
-        );
+
         break;
       default:
         say("\nInvalid option, please try again.");
@@ -98,16 +96,25 @@ async function main() {
 
     if (action !== "5") {
       const continueChoice = await Confirm.prompt(
-        "\nWould you like to continue using another service? (yes/no)",
+        "\nWould you like to continue using another service?",
       );
       continueService = continueChoice;
     }
   }
 
   if (!continueService) {
+    say("");
     say(
-      "\nThank you for interacting with this terminal app! Happy coding!",
+      boxen(
+        `Thank you for interacting with this terminal app!`,
+        {
+          padding: 1,
+          title: "HAPPY CODING",
+          titleAlignment: "center",
+        },
+      ),
     );
+    say("");
   }
 }
 
@@ -154,7 +161,7 @@ async function judgeCode(userInputCode) {
   say("");
   say(
     boxen(
-      `\nReadability score: ${readScore}
+      `Readability score: ${readScore}
       \nVariable naming score: ${nameScore}
       \nConciseness score: ${conciseScore}`,
       {
@@ -180,7 +187,7 @@ async function helpCode(userInputCode) {
   say("");
   say(
     boxen(
-      `\n1. Style (improve readability)
+      `1. Style (improve readability)
       \n2. Naming (improve variable naming)
       \n3. Conciseness (make your code more concise)`,
       {
@@ -204,7 +211,7 @@ async function helpCode(userInputCode) {
         Code snippet:
         ${userInputCode}
         
-        Suggestion:
+        Please generate repond within 3 short and concise key points, within 100 words. 
       `;
       break;
     case "2": // Improve Naming
@@ -214,7 +221,7 @@ async function helpCode(userInputCode) {
         Code snippet:
         ${userInputCode}
         
-        Suggested naming example:
+        Please generate repond within 3 short and concise key points, within 100 words. 
       `;
       break;
     case "3": // Make More Concise
@@ -224,7 +231,7 @@ async function helpCode(userInputCode) {
         Code snippet:
         ${userInputCode}
         
-        Concise version:
+        Please generate repond within 3 short and concise key points, within 100 words. 
       `;
       break;
     default:
@@ -232,9 +239,12 @@ async function helpCode(userInputCode) {
       return;
   }
 
-  const suggestion = await gptPrompt(prompt, { temperature: 0.5 });
+  const suggestion = await gptPrompt(prompt, {
+    temperature: 0.5,
+    max_tokens: 256,
+  });
 
-  say(`\nSuggestion: ${suggestion}`);
+  say(`\nSuggestion: \n${suggestion}`);
 }
 
 // ----------TROUBLESHOOTING---------- //
@@ -264,17 +274,17 @@ async function troubleCode(userInputCode) {
       Code snippet:
       ${userInputCode}
       
-      Please make sure the suggestion or solution is short and concise, within 3 key points. 
+      Please make sure the suggestion or solution is short and concise, within 3 key points, within 100 words.. 
     `;
 
     const suggestion = await gptPrompt(troubleshootingPrompt, {
       max_tokens: 512,
       temperature: 0.5,
     });
-    say(`\nSuggestion: ${suggestion}`);
+    say(`\nSuggestion: \n${suggestion}`);
 
     const moreQuestions = await Confirm.prompt(
-      "\nDo you have more questions about your code? (yes/no):",
+      "\nDo you have more questions about your code?",
     );
     hasQuestions = moreQuestions;
   }
