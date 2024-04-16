@@ -1,0 +1,35 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  height: 95vh;
+}
+
+#main {
+  /* display: none; */
+  -webkit-user-select: none;
+  /* Safari */
+  -ms-user-select: none;
+  /* IE 10 and IE 11 */
+  user-select: none;
+  /* Standard syntax */
+}
+
+.inter {
+  border: 5px double #9e9e9e9e;
+  padding: 10px;
+}
+
+#commandDiv {
+  height: 65vh;
+  width: 42vw;
+  overflow-x: auto;
+  overflow-y: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  /* justify-content: center; */
+
+  background-color: rgb(39, 39, 39);
+}
