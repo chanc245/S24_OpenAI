@@ -190,3 +190,5 @@ async function requestAI(input) {
     return "Error in submitting data.";
   }
 }
+
+ctx.response.body = `${dishName} \n ${twoFacts}`;
