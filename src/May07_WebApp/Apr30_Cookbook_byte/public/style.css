@@ -24,12 +24,29 @@ body {
 /* TERMINAL SETUP */
 /* TERMINAL SETUP */
 
-.inter {
+.interRight {
   border: 5px solid #936B57;
   padding: 20px;
 }
 
-#commandDiv {
+#commandDivRight {
+  height: 80vh;
+  width: 80vw;
+  overflow-x: auto;
+  overflow-y: auto;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  /* justify-content: center; */
+
+  background-color: #FCF5F1;
+}
+
+.interLeft {
+  border: 5px solid #936B57;
+  padding: 20px;
+}
+
+#commandDivLeft {
   height: 80vh;
   width: 80vw;
   overflow-x: auto;

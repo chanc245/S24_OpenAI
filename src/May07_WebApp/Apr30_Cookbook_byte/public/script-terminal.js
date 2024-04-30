@@ -4,9 +4,7 @@
 // ---------- TERMINAL ---------- //
 // ---------- TERMINAL ---------- //
 
-let recipeName = "tiramisu";
-
-let term;
+const recipeName = "tiramisu";
 
 let quizs;
 let quizArray;
@@ -14,13 +12,25 @@ let quizArray;
 let recipeArray;
 
 $(document).ready(function () {
-  term = $("#commandDiv").terminal({
+  termRight = $("#commandDivRight").terminal({
     quiz: async function () {
       // this.echo("--quiz Start!");
       await generateQuiz();
 
       askQuiz(quizArray, this, 0);
     },
+  }, {
+    greetings: "",
+  });
+  termRight.exec("quiz"); //DEBUG PURPOSE!
+
+  setTimeout(function () {
+    termRight.echo(`\n--recipe quiz session initiating--\n`);
+  }, 1000);
+});
+
+$(document).ready(function () {
+  termLeft = $("#commandDivLeft").terminal({
     recipe: async function () {
       await generateRecipe();
 
@@ -29,14 +39,19 @@ $(document).ready(function () {
   }, {
     greetings: "",
   });
-  // term.exec("recipe"); //DEBUG PURPOSE!
+  termLeft.exec("recipe"); //DEBUG PURPOSE!.
+
+  setTimeout(function () {
+    termLeft.echo(`\n--recipe quiz session initiating--`);
+  }, 1000);
 });
 
 async function generateRecipe() {
   const recipeGeneratePrompt = `
 Based on this recipe ${recipeName}, 
-Please list out the 5 steps to complete this recipe.
-ONLY output the steps,
+Please LIST OUT the 5 steps to complete this recipe.
+ONLY output the STEPS,
+make sure the all the steps are WITHIN a sentence
 DO NOT output anything else`;
 
   const recipeList = await requestAI(recipeGeneratePrompt);
@@ -67,8 +82,8 @@ function askQuiz(quizArray, terminal, quizIndex) {
     terminal.push(async function (command) {
       const userAns =
         `You are a grandma that are playing a fun fact game with your grandchild,
-        This is the question: ${currentQuiz}, and the input is ${command}, 
-        please explain in ONLY one sentence why the user is right or wrong`;
+        This is the question: ${currentQuiz}, and the answer is ${command}, 
+        please explain in ONLY one sentence why it is right or wrong`;
 
       await requestAI(userAns).then(
         (aiResponse) => {
@@ -141,7 +156,7 @@ async function requestAI(input) {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ input: input }),
+    body: JSON.stringify({ input: input, max_tokens: 1000 }),
   });
 
   if (response.ok) {

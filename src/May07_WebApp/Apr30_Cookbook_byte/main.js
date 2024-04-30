@@ -1,3 +1,7 @@
+// Deno File
+// deno run -A path/to/this/file
+// deno run src/Apr30_WebApp/Apr30_Cookbook_byte/main.js
+
 import { loadEnv } from "../../shared/util.ts";
 import { Application, Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
 import { createExitSignal, staticServer } from "../../shared/server.ts";

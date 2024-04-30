@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery.terminal/js/jquery.terminal.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery.terminal/css/jquery.terminal.min.css" />
+  <link rel="stylesheet" href="style.css" />
+
+  <title>Document</title>
+</head>
+<body>
+
+  <style>
+    .interRight {
+      border: 10px solid #F0B5BC;
+      padding: 20px;
+    }
+
+    #commandDivRight {
+
+      flex-grow:2;
+      width: 40vw;
+
+      overflow-x: auto;
+      overflow-y: auto;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      /* justify-content: center; */
+
+      background-color: #FFE7E4;
+    }
+
+    .interLeft {
+      border: 10px solid #F1C2DD;
+      padding: 20px;
+    }
+
+    #commandDivLeft {
+
+      flex-grow:2;
+      width: 40vw;
+
+      overflow-x: auto;
+      overflow-y: auto;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      /* justify-content: center; */
+
+      background-color: #FFE6EF;
+    }
+
+    .terminal-container {
+      display: flex;
+    
+      justify-content: center; 
+      align-items: stretch;    
+
+      /* background-color: #bbdefb; */
+      height: 100%;
+      padding: 100px;
+      padding-left: 0;
+      padding-right: 0;
+      gap: 20px;
+    }
+  </style>
+  
+  <div class="terminal-container">
+    <div class="preloader visually-hidden"></div>
+    <div class="interLeft" id="commandDivLeft"></div>
+    <div class="interRight" id="commandDivRight"></div>
+  </div>
+  
+  <!-- <script src="script.js"></script> -->
+  <script src="script-terminal.js"></script>
+</body>
+</html>
