@@ -4,7 +4,7 @@
 // ---------- TERMINAL ---------- //
 // ---------- TERMINAL ---------- //
 
-const recipeName = "tiramisu";
+const recipeName = "salty leomnade";
 
 let quizs;
 let quizArray;

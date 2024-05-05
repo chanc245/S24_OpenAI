@@ -87,7 +87,7 @@ let currentRecipe;
 // ---------- TERMINAL ---------- //
 // ---------- TERMINAL ---------- //
 
-let term;
+// let term;
 
 function showIngredients(currentRecipe, terminal) {
   terminal.echo(`\nToday's Recipe: ${currentRecipe.name}\n`);
@@ -191,4 +191,4 @@ async function requestAI(input) {
   }
 }
 
-ctx.response.body = `${dishName} \n ${twoFacts}`;
+ctx.response.body = `${dishName} <br> ${twoFacts}`;
